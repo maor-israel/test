@@ -11,4 +11,6 @@ app.post("/", (req,res) => {
 
 
 
-app.listen(process.env.port)
+
+
+app.listen(1000,() => console.log("started"))

@@ -27,11 +27,13 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", (req, res) => {
+
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
-  const from = req.body.entry[0].changes[0].value.messages[0].from;
-  const text = req.body.entry[0].changes[0].value.messages[0].text.body;
-  const msgId = req.body.entry[0].changes[0].value.messages[0].id;
+    console.log(req.body)
+//   const from = req.body.entry[0].changes[0].value.messages[0].from;
+//   const text = req.body.entry[0].changes[0].value.messages[0].text.body;
+//   const msgId = req.body.entry[0].changes[0].value.messages[0].id;
 
   const token = req.query["hub.verify_token"];
 

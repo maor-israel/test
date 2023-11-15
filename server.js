@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get("/get", (req, res) => {
+app.get("/webhook", (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
   console.log("msg", req.body);
 
@@ -26,7 +26,7 @@ app.get("/get", (req, res) => {
   }
 });
 
-app.post("/get", (req, res) => {
+app.post("/webhook", (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   const from = req.body.entry[0].changes[0].value.messages[0].from;
@@ -38,6 +38,35 @@ app.post("/get", (req, res) => {
   if (token === VERIFY_TOKEN) {
     console.log({ from, text, msgId });
   }
+});
+
+app.get("/send", async (req, res) => {
+  const main = async () => {
+    const res = await fetch(
+      "https://graph.facebook.com/v17.0/107553652069379/messages",
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            `Bearer ${process.env.WHATSAPP_TOKEN}`,
+          "Content-Type": " application/json",
+        },
+        body: JSON.stringify({
+          messaging_product: "whatsapp",
+          to: "972505551142",
+          type: "template",
+          template: { name: "hello_world", language: { code: "en_US" } },
+        }),
+      }
+    );
+
+    const json = await res.json();
+    return json;
+  };
+
+  const result = await main();
+
+  res.send(result);
 });
 
 app.listen(port, () => {

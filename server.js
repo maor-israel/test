@@ -28,7 +28,7 @@ app.get('/get', (req, res) => {
 
 app.post('/get', (req, res) => {
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-    console.log("msg", req.body.entry[0].changes[0].value.messages[0].text.body);
+    console.log("msg", req.body.entry[0].changes[0].value.messages);
 
     let mode = req.query['hub.mode'];
     let token = req.query['hub.verify_token'];

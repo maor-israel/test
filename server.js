@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.get('/get', (req, res) => {
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-    console.log("msg", JSON.stringify(req.body.entry[0]));
+    console.log("msg", req.body.entry[0]);
 
     // var textMessage = req.body.entry[0].changes[0].value.messages[0];
     // console.log("msg", JSON.stringify(textMessage));

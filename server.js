@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Endpoint for the webhook
-app.get('/', (req, res) => {
+app.get('/get', (req, res) => {
     console.log("req",req);
     // Your verify token. Should be a secret kept in the environment variables
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     }
 });
 
-app.post('/', (req, res) => {
+app.post('/post', (req, res) => {
     console.log("req",req);
     // Your verify token. Should be a secret kept in the environment variables
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;

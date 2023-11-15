@@ -28,4 +28,4 @@ app.get('/get', (req, res) => {
 });
 
 
-app.listen(port, () => console.log(sstarted))
+app.listen(port, () => console.log("started"))

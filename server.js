@@ -30,7 +30,7 @@ app.post("/webhook", (req, res) => {
 
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
-    console.log(req.body.entery)
+    console.log(req.body.entery[0])
 //   const from = req.body.entry[0].changes[0].value.messages[0].from;
 //   const text = req.body.entry[0].changes[0].value.messages[0].text.body;
 //   const msgId = req.body.entry[0].changes[0].value.messages[0].id;

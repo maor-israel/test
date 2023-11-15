@@ -28,9 +28,10 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", (req, res) => {
 
-  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
-    console.log(req.body.entery)
+    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+    
+    console.log(req.body)
+//     console.log("msg", req.body.entry[0].changes[0].value.messages[0].text.body);
 //   const from = req.body.entry[0].changes[0].value.messages[0].from;
 //   const text = req.body.entry[0].changes[0].value.messages[0].text.body;
 //   const msgId = req.body.entry[0].changes[0].value.messages[0].id;
@@ -74,3 +75,4 @@ app.get("/send", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+

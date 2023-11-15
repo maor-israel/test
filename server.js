@@ -26,11 +26,11 @@ app.get('/get', (req, res) => {
     }
 });
 
-app.post('/get', (req, res) => {
+app.post('/post', (req, res) => {
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
     let token = req.query['hub.verify_token'];
-    console.log("msg - ", req.body,"token - ",token);
+    console.log("msg - ", JSON.stringify(req.body),"token - ",token);
     
 });
 

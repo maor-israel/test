@@ -10,7 +10,8 @@ app.use(express.json());
 
 app.get('/get', (req, res) => {
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-    console.log("msg", req.body);
+    var textMessage = req.body.entry[0].changes[0].value.messages[0];
+    console.log("msg", JSON.stringify(textMessage));
 
     let mode = req.query['hub.mode'];
     let token = req.query['hub.verify_token'];

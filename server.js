@@ -31,16 +31,15 @@ app.post("/webhook", (req, res) => {
     const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
     const body = req.body;
     
-//     console.log("msg", req.body.entry[0].changes[0].value.messages[0].text.body);
-//   const from = req.body.entry[0].changes[0].value.messages[0].from;
-//   const text = req.body.entry[0].changes[0].value.messages[0].text.body;
-//   const msgId = req.body.entry[0].changes[0].value.messages[0].id;
+  const from = body.entry[0].changes[0].value.messages[0].from;
+  const text = body.entry[0].changes[0].value.messages[0].text.body;
+  const msgId = body.entry[0].changes[0].value.messages[0].id;
 
   const token = req.query["hub.verify_token"];
   
-  console.log(body.entry)
+  console.log({ from, text, msgId });
   if (token === VERIFY_TOKEN) {
-    console.log({ from, text, msgId });
+    console.log("truth my man")
   }
 });
 

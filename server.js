@@ -1,45 +1,45 @@
 const express = require("express");
 const dotenv = require("dotenv");
-
-dotenv.config();
-
 const app = express();
+app.use(express.json());
+dotenv.config();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
-
-app.get("/webhook", (req, res) => {
+app.get("/webhook", async (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-  console.log("msg", req.body);
+  const token = req.query["hub.verify_token"];
+  const mode = req.query["hub.mode"];
+  const challenge = req.query["hub.challenge"];
 
-  let mode = req.query["hub.mode"];
-  let token = req.query["hub.verify_token"];
-  let challenge = req.query["hub.challenge"];
-
-  if (mode && token) {
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      console.log("WEBHOOK_VERIFIED");
-      res.status(200).send(challenge);
-    } else {
-      res.sendStatus(403);
-    }
+  if (mode === "subscribe" && token === VERIFY_TOKEN) {
+    console.log("WEBHOOK_VERIFIED");
+    res.status(200).send(challenge);
+  } else {
+    res.sendStatus(403);
   }
 });
 
-app.post("/webhook", (req, res) => {
-
-    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-    const body = req.body;
-    
-  const from = body.entry[0].changes[0].value.messages[0].from;
-  const text = body.entry[0].changes[0].value.messages[0].text.body;
-  const msgId = body.entry[0].changes[0].value.messages[0].id;
-
+app.post("/webhook", async (req, res) => {
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
   const token = req.query["hub.verify_token"];
-  
-  console.log({ from, text, msgId });
+
   if (token === VERIFY_TOKEN) {
-    console.log("truth my man")
+    try {
+      const body = req.body;
+      const from = body.entry[0].changes[0].value.messages[0].from;
+      const text = body.entry[0].changes[0].value.messages[0].text.body;
+      const type = body.entry[0].changes[0].value.messages[0].type;
+
+      console.log({ from, text, type });
+
+      res.status(200).send("Message processed");
+    } catch (error) {
+      console.error("Error processing message:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  } else {
+    console.log("Wrong Token");
+    res.status(403).send("Wrong Token");
   }
 });
 
@@ -50,8 +50,7 @@ app.get("/send", async (req, res) => {
       {
         method: "POST",
         headers: {
-          Authorization:
-            `Bearer ${process.env.WHATSAPP_TOKEN}`,
+          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
           "Content-Type": " application/json",
         },
         body: JSON.stringify({
@@ -75,4 +74,3 @@ app.get("/send", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-

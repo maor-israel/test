@@ -22,9 +22,11 @@ app.get("/webhook", async (req, res) => {
 app.post("/webhook", async (req, res) => {
   try {
     const body = req.body;
+    console.log(body.entry[0].changes[0].value.messages)
+    console.log(body.entry[0].changes[0].value.messages[0])
     const from = body.entry[0].changes[0].value.messages[0].from;
-    const text = body.entry[0].changes[0].value.messages[0].text.body;
     const type = body.entry[0].changes[0].value.messages[0].type;
+    const text = body.entry[0].changes[0].value.messages[0]?.text?.body;
 
     console.log({ from, text, type });
 

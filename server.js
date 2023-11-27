@@ -23,6 +23,8 @@ app.post("/webhook", async (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
   const token = req.query["hub.verify_token"];
 
+  console.log(token,req.body)
+
   if (token === VERIFY_TOKEN) {
     try {
       const body = req.body;

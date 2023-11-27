@@ -20,12 +20,6 @@ app.get("/webhook", async (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-  const token = req.query["hub.verify_token"];
-
-  console.log(token,req.body)
-
-  if (token === VERIFY_TOKEN) {
     try {
       const body = req.body;
       const from = body.entry[0].changes[0].value.messages[0].from;
@@ -39,10 +33,6 @@ app.post("/webhook", async (req, res) => {
       console.error("Error processing message:", error);
       res.status(500).send("Internal Server Error");
     }
-  } else {
-    console.log("Wrong Token");
-    res.status(403).send("Wrong Token");
-  }
 });
 
 app.get("/send", async (req, res) => {
